@@ -10,6 +10,7 @@ namespace Clinica.Models
     public partial class tbTipoProfissional
     {
         [Key]
+        [Display(Name = "Tipo de Profissional")]
         public int IdTipoProfissional { get; set; }
 
         [StringLength(100)]

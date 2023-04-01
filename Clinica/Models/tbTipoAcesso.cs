@@ -20,6 +20,7 @@ namespace Clinica.Models
 
         [Required]
         [StringLength(100)]
+        [Display(Name = "Tipo de Acesso")]
         public string Nome { get; set; }
 
         public bool FlagAtivo { get; set; }

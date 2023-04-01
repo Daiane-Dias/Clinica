@@ -16,6 +16,7 @@ namespace Clinica.Models
         }
 
         [Key]
+        [Display(Name = "Contrato")]
         public int IdContrato { get; set; }
 
         public int IdPlano { get; set; }

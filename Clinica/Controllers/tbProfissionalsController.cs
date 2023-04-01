@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Clinica.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Clinica.Controllers
 {
@@ -40,7 +41,8 @@ namespace Clinica.Controllers
         public ActionResult Create()
         {
             ViewBag.IdCidade = new SelectList(db.tbCidade, "IdCidade", "nome");
-            ViewBag.IdContrato = new SelectList(db.tbContrato, "IdContrato", "IdContrato");
+            ViewBag.IdPlano = new SelectList(db.tbPlano, "IdPlano", "Nome");
+            //ViewBag.IdContrato = new SelectList(db.tbContrato, "IdContrato", "IdContrato");
             ViewBag.IdTipoAcesso = new SelectList(db.tbTipoAcesso, "IdTipoAcesso", "Nome");
             return View();
         }
@@ -54,6 +56,7 @@ namespace Clinica.Controllers
         {
             if (ModelState.IsValid)
             {
+                tbProfissional.IdUser = User.Identity.GetUserId();
                 db.tbProfissional.Add(tbProfissional);
                 db.SaveChanges();
                 return RedirectToAction("Index");

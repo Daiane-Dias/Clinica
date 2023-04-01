@@ -22,6 +22,7 @@ namespace Clinica.Models
         public int? IdEstado { get; set; }
 
         [StringLength(100)]
+        [Display(Name = "Nome da Cidade")]
         public string nome { get; set; }
 
         public virtual tbEstado tbEstado { get; set; }

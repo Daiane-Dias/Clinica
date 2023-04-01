@@ -22,6 +22,7 @@ namespace Clinica.Models
         [Key]
         public int IdProfissional { get; set; }
 
+        [Display(Name = "Tipo")]
         public int? IdTipoProfissional { get; set; }
 
         public int IdContrato { get; set; }
