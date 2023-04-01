@@ -1,0 +1,178 @@
+﻿@model Clinica.Models.tbProfissional
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbProfissional</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tbCidade.nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbCidade.nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbContrato.IdContrato)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbContrato.IdContrato)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbTipoAcesso.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbTipoAcesso.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdTipoProfissional)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdTipoProfissional)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdUser)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CPF)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CPF)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CRM_CRN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CRM_CRN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Especialidade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Especialidade)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Logradouro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Logradouro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Numero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Numero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bairro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bairro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CEP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CEP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cidade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cidade)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DDD1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DDD1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DDD2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DDD2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefone1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefone1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefone2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefone2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Salario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Salario)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdProfissional }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

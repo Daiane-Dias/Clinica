@@ -1,0 +1,147 @@
+﻿@model IEnumerable<Clinica.Models.tbProfissional>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.tbCidade.nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tbContrato.IdContrato)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tbTipoAcesso.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdTipoProfissional)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdUser)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CPF)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CRM_CRN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Especialidade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Logradouro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Numero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bairro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CEP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cidade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DDD1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DDD2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telefone1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telefone2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Salario)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.tbCidade.nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tbContrato.IdContrato)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tbTipoAcesso.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdTipoProfissional)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdUser)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CPF)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CRM_CRN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Especialidade)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Logradouro)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Numero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Bairro)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CEP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cidade)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DDD1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DDD2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telefone1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telefone2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Salario)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdProfissional }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdProfissional }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdProfissional })
+        </td>
+    </tr>
+}
+
+</table>
