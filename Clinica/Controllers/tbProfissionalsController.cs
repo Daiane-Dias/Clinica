@@ -52,10 +52,18 @@ namespace Clinica.Controllers
         // obter mais detalhes, veja https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdProfissional,IdTipoProfissional,IdContrato,IdTipoAcesso,IdCidade,IdUser,Nome,CPF,CRM_CRN,Especialidade,Logradouro,Numero,Bairro,CEP,Cidade,Estado,DDD1,DDD2,Telefone1,Telefone2,Salario")] tbProfissional tbProfissional)
+        public ActionResult Create([Bind(Include = "IdProfissional,IdTipoProfissional,IdTipoAcesso,IdCidade,IdUser,Nome,CPF,CRM_CRN,Especialidade,Logradouro,Numero,Bairro,CEP,Cidade,Estado,DDD1,DDD2,Telefone1,Telefone2,Salario")] tbProfissional tbProfissional, [Bind(Include ="IdPlano")] tbContrato tbContrato)//[Bind(Include = "IdProfissional,IdTipoProfissional,IdContrato,IdTipoAcesso,IdCidade,IdUser,Nome,CPF,CRM_CRN,Especialidade,Logradouro,Numero,Bairro,CEP,Cidade,Estado,DDD1,DDD2,Telefone1,Telefone2,Salario")] tbProfissional tbProfissional
         {
             if (ModelState.IsValid)
             {
+                //Contrato//
+                tbContrato.DataInicio = DateTime.UtcNow;
+                tbContrato.DataFim = tbContrato.DataInicio.Value.AddMonths(1);
+                db.tbContrato.Add(tbContrato);
+                db.SaveChanges();
+                //
+                //Profissional
+                tbProfissional.IdContrato = tbContrato.IdContrato;
                 tbProfissional.IdUser = User.Identity.GetUserId();
                 db.tbProfissional.Add(tbProfissional);
                 db.SaveChanges();
@@ -63,7 +71,8 @@ namespace Clinica.Controllers
             }
 
             ViewBag.IdCidade = new SelectList(db.tbCidade, "IdCidade", "nome", tbProfissional.IdCidade);
-            ViewBag.IdContrato = new SelectList(db.tbContrato, "IdContrato", "IdContrato", tbProfissional.IdContrato);
+            ViewBag.IdPlano = new SelectList(db.tbPlano, "IdPlano", "IdPlano");
+            //ViewBag.IdContrato = new SelectList(db.tbContrato, "IdContrato", "IdContrato", tbProfissional.IdContrato);
             ViewBag.IdTipoAcesso = new SelectList(db.tbTipoAcesso, "IdTipoAcesso", "Nome", tbProfissional.IdTipoAcesso);
             return View(tbProfissional);
         }
