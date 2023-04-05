@@ -124,7 +124,7 @@ namespace Clinica.Controllers
             }
             var tbProfissional = db.tbProfissional.Find(id);
             if (TryUpdateModel(tbProfissional, "",
-                new string[] { "IdCidade", "Nome", "Logradouro","Numero","Bairro","CEP","Cidade","Estado","DDD1","DDD2","Telefone1","Telefone2"}))
+                new string[] { "IdCidade", "Nome", "Logradouro","Numero","Bairro","CEP","Cidade","Estado","DDD1","DDD2","Telefone1","Telefone2","Salario"}))
             {
                 try
                 {
