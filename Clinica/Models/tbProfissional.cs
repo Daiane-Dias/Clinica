@@ -31,8 +31,9 @@ namespace Clinica.Models
 
         public int IdCidade { get; set; }
 
-        //[Required]
+        [Required]
         [StringLength(128)]
+        [Display(Name = "Usuario")]
         public string IdUser { get; set; }
 
         [Required]
