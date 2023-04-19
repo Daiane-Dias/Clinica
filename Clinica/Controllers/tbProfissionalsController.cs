@@ -15,12 +15,34 @@ namespace Clinica.Controllers
     public class tbProfissionalsController : Controller
     {
         private ModelDB db = new ModelDB();
+        public enum Plan
+        {
+            MedicoTotal = 1,
+            MedicoParcial = 2,
+            Nutricional = 3,
+            Especial = 4
+        }
 
         // GET: tbProfissionals
         public ActionResult Index()
         {
-            var tbProfissional = db.tbProfissional.Include(t => t.tbCidade).Include(t => t.tbContrato).Include(t => t.tbTipoAcesso);
-            return View(tbProfissional.ToList());
+            //var tbProfissional = db.tbProfissional.Include(t => t.tbCidade).Include(t => t.tbContrato).Include(t => t.tbTipoAcesso);
+            // IQueryable<tbProfissional> tbProfissional = db.tbProfissional.Include(t => t.tbCidade).Include(t => t.tbContrato).Include(t => t.tbTipoAcesso);
+            //return View(tbProfissional.ToList());
+
+            //LINQ
+            var k = (from c in db.tbProfissional
+                     where ((Plan)c.tbContrato.IdPlano == Plan.MedicoTotal)
+                     orderby (c.Salario)
+                     select c).ToList();
+            return View(k);
+
+            //var k = (from c in db.tbProfissional
+            //         from d in db.tbPlano
+            //         where (d.Nome == "Medico Total")
+            //         where (d.IdPlano == c.tbContrato.IdPlano)
+            //         select c).ToList();
+            //return View(k);
         }
 
         // GET: tbProfissionals/Details/5
