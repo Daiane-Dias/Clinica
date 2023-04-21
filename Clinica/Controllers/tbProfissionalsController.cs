@@ -16,13 +16,7 @@ namespace Clinica.Controllers
     public class tbProfissionalsController : Controller
     {
         private ModelDB db = new ModelDB();
-        public enum Plan
-        {
-            MedicoTotal = 1,
-            MedicoParcial = 2,
-            Nutricional = 3,
-            Especial = 4
-        }
+        
 
         // GET: tbProfissionals
       [Authorize(Roles = "Gerente,Medico")]
@@ -45,7 +39,7 @@ namespace Clinica.Controllers
                     //        where ((Plan)c.tbContrato.IdPlano == Plan.MedicoTotal)
                     //        select c).ToList().Select(x => new tbProfissional() { Bairro = x.Bairro, CEP = x.CEP}).ToList();
                     var k = (from c in db.tbProfissional
-                             where ((Plan)c.tbContrato.IdPlano == Plan.MedicoTotal)
+                             where ((Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.MedicoTotal)
                              select new ParteProfissional() { Bairro = c.Bairro, CEP =c.CEP, CPF = c.CPF, Nome = c.Nome}).ToList();
                     return View("Index2",k);
                 }
@@ -82,6 +76,8 @@ namespace Clinica.Controllers
         }
 
         // GET: tbProfissionals/Create
+        [Authorize(Roles = "Gerente,Medico")]
+        [Authorize(Roles = "Gerente,Nutricionista")]
         public ActionResult Create()
         {
             ViewBag.IdCidade = new SelectList(db.tbCidade, "IdCidade", "nome");
@@ -103,8 +99,9 @@ namespace Clinica.Controllers
                 ModelState.Remove("IdUser");
                 if (ModelState.IsValid)
                 {
+                   
                     //Contrato//
-                    tbContrato.DataInicio = DateTime.UtcNow;
+                        tbContrato.DataInicio = DateTime.UtcNow;
                     tbContrato.DataFim = tbContrato.DataInicio.Value.AddMonths(1);
                     db.tbContrato.Add(tbContrato);
                     db.SaveChanges();
