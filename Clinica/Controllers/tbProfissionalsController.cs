@@ -35,14 +35,19 @@ namespace Clinica.Controllers
             if (User.IsInRole("Gerente"))
             {
                 tbProfissional = db.tbProfissional.Include(t => t.tbCidade).Include(t => t.tbContrato).Include(t => t.tbTipoAcesso);
+                return View(tbProfissional.ToList());
             }
             else
             {
                 if (User.IsInRole("Medico"))
                 {
-                     tbProfissional = (from c in db.tbProfissional
+                    //var k = (from c in db.tbProfissional
+                    //        where ((Plan)c.tbContrato.IdPlano == Plan.MedicoTotal)
+                    //        select c).ToList().Select(x => new tbProfissional() { Bairro = x.Bairro, CEP = x.CEP}).ToList();
+                    var k = (from c in db.tbProfissional
                              where ((Plan)c.tbContrato.IdPlano == Plan.MedicoTotal)
-                             select c);
+                             select new ParteProfissional() { Bairro = c.Bairro, CEP =c.CEP, CPF = c.CPF, Nome = c.Nome}).ToList();
+                    return View("Index2",k);
                 }
             }
             return View(tbProfissional.ToList());

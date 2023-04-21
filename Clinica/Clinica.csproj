@@ -212,6 +212,7 @@
     <Compile Include="Models\tbPatologia.cs" />
     <Compile Include="Models\tbPergunta.cs" />
     <Compile Include="Models\tbPlano.cs" />
+    <Compile Include="Models\ParteProfissional.cs" />
     <Compile Include="Models\tbProfissional.cs" />
     <Compile Include="Models\tbRastreamentoMetabolico.cs" />
     <Compile Include="Models\tbRastreamentoResposta.cs" />
@@ -293,6 +294,7 @@
     <Content Include="Views\tbAlimentos\Edit.cshtml" />
     <Content Include="Views\tbAlimentos\Index.cshtml" />
     <Content Include="Views\Account\RegisterM.cshtml" />
+    <Content Include="Views\tbProfissionals\Index2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
