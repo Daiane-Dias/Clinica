@@ -195,7 +195,7 @@ namespace Clinica.Controllers
         [AllowAnonymous]
         [Authorize(Roles = "Medico")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterM(UniaoRegistroProfissional model, [Bind(Include = "Nome,CPF,CRM_CRN,Especialidade,Logradouro,Numero,Bairro,CEP,Cidade,Estado,DDD1,DDD2,Telefone1,Telefone2")] tbProfissional tbProfissional,
+        public async Task<ActionResult> RegisterM(UniaoRegistroProfissional model, [Bind(Include = "IdCidade,Nome,CPF,CRM_CRN,Especialidade,Logradouro,Numero,Bairro,CEP,Cidade,Estado,DDD1,DDD2,Telefone1,Telefone2")] tbProfissional tbProfissional,
             [Bind(Include = "IdPlano")] tbContrato tbContrato, [Bind(Include = "IdCidade")] tbCidade tbCidade)//, [Bind(Include = "IdTipoProfissional")] tbTipoProfissional tbTipoProfissional
         {
             try
@@ -205,7 +205,7 @@ namespace Clinica.Controllers
                 {
                     var user = new ApplicationUser { UserName = model.RegisterViewModel.Email, Email = model.RegisterViewModel.Email };
                     IdentityUserRole iur = new IdentityUserRole();
-                    iur.RoleId = Models.Enum.TiposProfissionais.Medico.ToString();
+                    iur.RoleId = "02";
                     iur.UserId = user.Id;
                     user.Roles.Add(iur);
                     var result = await UserManager.CreateAsync(user, model.RegisterViewModel.Password);
@@ -275,7 +275,7 @@ namespace Clinica.Controllers
         [AllowAnonymous]
         [Authorize(Roles = "Nutricionista")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterN(UniaoRegistroProfissional model, [Bind(Include = "Nome,CPF,CRM_CRN,Especialidade,Logradouro,Numero,Bairro,CEP,Cidade,Estado,DDD1,DDD2,Telefone1,Telefone2")] tbProfissional tbProfissional,
+        public async Task<ActionResult> RegisterN(UniaoRegistroProfissional model, [Bind(Include = "IdCidade,Nome,CPF,CRM_CRN,Especialidade,Logradouro,Numero,Bairro,CEP,Cidade,Estado,DDD1,DDD2,Telefone1,Telefone2")] tbProfissional tbProfissional,
             [Bind(Include = "IdPlano")] tbContrato tbContrato, [Bind(Include = "IdCidade")] tbCidade tbCidade)//, [Bind(Include = "IdTipoProfissional")] tbTipoProfissional tbTipoProfissional
         {
             try
@@ -285,7 +285,7 @@ namespace Clinica.Controllers
                 {
                     var user = new ApplicationUser { UserName = model.RegisterViewModel.Email, Email = model.RegisterViewModel.Email };
                     IdentityUserRole iur = new IdentityUserRole();
-                    iur.RoleId = Models.Enum.TiposProfissionais.Nutricionista.ToString();
+                    iur.RoleId = "03";
                     iur.UserId = user.Id;
                     user.Roles.Add(iur);
                     var result = await UserManager.CreateAsync(user, model.RegisterViewModel.Password);

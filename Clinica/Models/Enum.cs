@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -14,11 +16,6 @@ namespace Clinica.Models
             Nutricional = 3,
             Especial = 4
         }
-        public enum TiposProfissionais
-        {
-            Gerente = 01,
-            Medico = 02,
-            Nutricionista = 03
-        }
+      
     }
 }
