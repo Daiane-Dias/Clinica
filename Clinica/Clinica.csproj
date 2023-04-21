@@ -292,6 +292,7 @@
     <Content Include="Views\tbAlimentos\Details.cshtml" />
     <Content Include="Views\tbAlimentos\Edit.cshtml" />
     <Content Include="Views\tbAlimentos\Index.cshtml" />
+    <Content Include="Views\Account\RegisterM.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

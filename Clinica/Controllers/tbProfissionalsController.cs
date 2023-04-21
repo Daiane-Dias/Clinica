@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity;
 
 namespace Clinica.Controllers
 {
+    [Authorize]
     public class tbProfissionalsController : Controller
     {
         private ModelDB db = new ModelDB();
@@ -24,18 +25,33 @@ namespace Clinica.Controllers
         }
 
         // GET: tbProfissionals
+      [Authorize(Roles = "Gerente,Medico")]
         public ActionResult Index()
         {
             //var tbProfissional = db.tbProfissional.Include(t => t.tbCidade).Include(t => t.tbContrato).Include(t => t.tbTipoAcesso);
             // IQueryable<tbProfissional> tbProfissional = db.tbProfissional.Include(t => t.tbCidade).Include(t => t.tbContrato).Include(t => t.tbTipoAcesso);
             //return View(tbProfissional.ToList());
-
+            IQueryable<tbProfissional> tbProfissional = null;
+            if (User.IsInRole("Gerente"))
+            {
+                tbProfissional = db.tbProfissional.Include(t => t.tbCidade).Include(t => t.tbContrato).Include(t => t.tbTipoAcesso);
+            }
+            else
+            {
+                if (User.IsInRole("Medico"))
+                {
+                     tbProfissional = (from c in db.tbProfissional
+                             where ((Plan)c.tbContrato.IdPlano == Plan.MedicoTotal)
+                             select c);
+                }
+            }
+            return View(tbProfissional.ToList());
             //LINQ
-            var k = (from c in db.tbProfissional
-                     where ((Plan)c.tbContrato.IdPlano == Plan.MedicoTotal)
-                     orderby (c.Salario)
-                     select c).ToList();
-            return View(k);
+            //var k = (from c in db.tbProfissional
+            //         where ((Plan)c.tbContrato.IdPlano == Plan.MedicoTotal)
+            //         orderby (c.Salario)
+            //         select c).ToList();
+            //return View(k);
 
             //var k = (from c in db.tbProfissional
             //         from d in db.tbPlano

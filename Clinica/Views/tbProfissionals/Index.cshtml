@@ -11,12 +11,16 @@
 </p>
 <table class="table">
     <tr>
+
         <th>
             @Html.DisplayNameFor(model => model.tbCidade.nome)
         </th>
+        @if (User.IsInRole("Gerente"))
+        {
         <th>
             @Html.DisplayNameFor(model => model.tbContrato.IdContrato)
         </th>
+
         <th>
             @Html.DisplayNameFor(model => model.tbContrato.tbPlano.Nome)
         </th>
@@ -26,6 +30,7 @@
         <th>
             @Html.DisplayNameFor(model => model.IdTipoProfissional)
         </th>
+        }
         <th>
             @Html.DisplayNameFor(model => model.IdUser)
         </th>

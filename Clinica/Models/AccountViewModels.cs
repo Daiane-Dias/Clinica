@@ -79,8 +79,13 @@ namespace Clinica.Models
         [Display(Name = "Confirmar Senha")]
         [Compare("Password", ErrorMessage = "A senha e a senha de confirmação não correspondem.")]
         public string ConfirmPassword { get; set; }
-    }
 
+    }
+    public class UniaoRegistroProfissional
+    {
+        public RegisterViewModel RegisterViewModel { get; set; }
+        public tbProfissional TbProfissional { get; set; }
+    }
     public class ResetPasswordViewModel
     {
         [Required]

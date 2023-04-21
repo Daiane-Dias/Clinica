@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Clinica.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data;
 
 namespace Clinica.Controllers
 {
@@ -17,7 +19,7 @@ namespace Clinica.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private ModelDB db = new ModelDB();
         public AccountController()
         {
         }
@@ -171,6 +173,85 @@ namespace Clinica.Controllers
             // Se chegamos até aqui e houver alguma falha, exiba novamente o formulário
             return View(model);
         }
+
+
+
+
+
+
+        //
+        // GET: /Account/Register
+        [AllowAnonymous]
+        public ActionResult RegisterM()
+        {
+            ViewBag.IdCidade = new SelectList(db.tbCidade, "IdCidade", "nome");
+            ViewBag.IdPlano = new SelectList(db.tbPlano, "IdPlano", "Nome");
+            return View();
+        }
+
+        //
+        // POST: /Account/Register
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterM(UniaoRegistroProfissional model, [Bind(Include = "Nome,CPF,CRM_CRN,Especialidade,Logradouro,Numero,Bairro,CEP,Cidade,Estado,DDD1,DDD2,Telefone1,Telefone2")] tbProfissional tbProfissional, [Bind(Include = "IdPlano")] tbContrato tbContrato, [Bind(Include = "IdCidade")] tbCidade tbCidade)
+        {
+            try
+            {
+                ModelState.Remove("tbProfissional.IdUser");
+                if (ModelState.IsValid)
+                {
+                    var user = new ApplicationUser { UserName = model.RegisterViewModel.Email, Email = model.RegisterViewModel.Email };
+                    IdentityUserRole iur = new IdentityUserRole();
+                    iur.RoleId = "02";
+                    iur.UserId = user.Id;
+                    user.Roles.Add(iur);
+                    var result = await UserManager.CreateAsync(user, model.RegisterViewModel.Password);
+                    if (result.Succeeded)
+                    {
+                        //Contrato//
+                        tbContrato.DataInicio = DateTime.UtcNow;
+                        tbContrato.DataFim = tbContrato.DataInicio.Value.AddMonths(1);
+                        db.tbContrato.Add(tbContrato);
+                        db.SaveChanges();
+                        //
+                        //Profissional
+                        tbProfissional.IdContrato = tbContrato.IdContrato;
+                        tbProfissional.IdUser = user.Id;
+                        tbProfissional.IdCidade = tbCidade.IdCidade;
+                        db.tbProfissional.Add(tbProfissional);
+                        db.SaveChanges();
+
+                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        // Para obter mais informações sobre como habilitar a confirmação da conta e redefinição de senha, visite https://go.microsoft.com/fwlink/?LinkID=320771
+                        // Enviar um email com este link
+                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        // await UserManager.SendEmailAsync(user.Id, "Confirmar sua conta", "Confirme sua conta clicando <a href=\"" + callbackUrl + "\">aqui</a>");
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    AddErrors(result);
+                }
+                // Se chegamos até aqui e houver alguma falha, exiba novamente o formulário
+                ViewBag.IdCidade = new SelectList(db.tbCidade, "IdCidade", "nome");
+                ViewBag.IdPlano = new SelectList(db.tbPlano, "IdPlano", "Nome");
+            }
+            catch (DataException ex)
+            {
+                ModelState.AddModelError("", $"Ocorreu um erro.Não foi possivel salvar os dados.Tente mais tarde!{ex}");
+                ViewBag.Erro = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                ViewBag.Erro = ex.Message;
+            }
+
+            return View(model);
+        }
+
 
         //
         // GET: /Account/ConfirmEmail
