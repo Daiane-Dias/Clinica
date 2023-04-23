@@ -25,6 +25,7 @@ namespace Clinica.Controllers
             var id = (from c in db.tbProfissional
                       where (c.IdUser == idLogado)
                       select c.IdProfissional);
+            //erro ao converter tipo
             int idProfissional = Convert.ToInt32(id);
             if (User.IsInRole("Medico"))
             {
