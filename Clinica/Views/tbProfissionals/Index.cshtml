@@ -7,7 +7,10 @@
 <h2>Index</h2>
 
 <p>
+    @if (User.IsInRole("Medico") || User.IsInRole("Nutricionista"))
+    {
     @Html.ActionLink("Cadastrar", "Create")
+    }
 </p>
 <table class="table">
     <tr>
@@ -155,8 +158,7 @@
                 {
                     @Html.ActionLink("Excluir", "Delete", new { id = item.IdProfissional }, htmlAttributes: new { @role = "button", @class = "btn btn-secondary btn-block active" })
                 }
-                @*@Html.ActionLink("Editar", "Edit2", new { id = item.IdProfissional }, htmlAttributes: new { @role = "button", @class = "btn btn-secondary btn-block active" })
-        @Html.ActionLink("Detalhes", "Details", new { id = item.IdProfissional }, htmlAttributes: new { @role = "button", @class = "btn btn-secondary btn-block active" })*@
+                
             </td>
         </tr>
     }

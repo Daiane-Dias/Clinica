@@ -19,6 +19,10 @@ else
     <li>@Html.ActionLink("Registrar", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
     <li>@Html.ActionLink("Registrar Medico", "RegisterM", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
     <li>@Html.ActionLink("Registrar Nutricionista", "RegisterN", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+    @if (User.IsInRole("Medico") || User.IsInRole("Nutricionista"))
+    {
+    <li> @Html.ActionLink("Registrar Paciente", "Index", "tbMedico_Paciente", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+    }
     <li>@Html.ActionLink("Logon", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
 </ul>
 }

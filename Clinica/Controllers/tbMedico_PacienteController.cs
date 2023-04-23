@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Clinica.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Clinica.Controllers
 {
@@ -15,8 +16,32 @@ namespace Clinica.Controllers
         private ModelDB db = new ModelDB();
 
         // GET: tbMedico_Paciente
+        [Authorize(Roles = "Medico,Nutricionista")]
         public ActionResult Index()
         {
+            IQueryable<tbMedico_Paciente> tbMedicoPaciente = null;
+            var idLogado = User.Identity.GetUserId();
+
+            var id = (from c in db.tbProfissional
+                      where (c.IdUser == idLogado)
+                      select c.IdProfissional);
+            int idProfissional = Convert.ToInt32(id);
+            if (User.IsInRole("Medico"))
+            {
+
+                var k = (from c in db.tbMedico_Paciente
+                         where (c.IdProfissional == idProfissional)
+                         select c).ToList();
+                return View("Index", k);
+            }
+            else if (User.IsInRole("Nutricionista"))
+            {
+                var k = (from c in db.tbMedico_Paciente
+                         where  (c.IdProfissional == idProfissional)
+                         select c).ToList();
+                return View("Index", k);
+            }
+
             var tbMedico_Paciente = db.tbMedico_Paciente.Include(t => t.tbPaciente).Include(t => t.tbProfissional);
             return View(tbMedico_Paciente.ToList());
         }

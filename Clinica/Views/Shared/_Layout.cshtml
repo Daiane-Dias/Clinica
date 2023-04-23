@@ -27,7 +27,11 @@
                     <li>@Html.ActionLink("Contato", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Profissional", "Index", "tbProfissionals")</li>
                     <li>@Html.ActionLink("Alimentos", "Index", "tbAlimentos")</li>
-                </ul>
+                    @if (User.IsInRole("Medico") || User.IsInRole("Nutricionista"))
+                    {
+                        <li>@Html.ActionLink("Cadastrar Pacientes", "Index", "tbMedico_Paciente")</li>
+                    }
+                    </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
