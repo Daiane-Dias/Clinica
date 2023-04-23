@@ -15,8 +15,7 @@
         <th>
             @Html.DisplayNameFor(model => model.tbCidade.nome)
         </th>
-        @*@if (User.IsInRole("Gerente"))
-        {*@
+      
         <th>
             @Html.DisplayNameFor(model => model.tbContrato.IdContrato)
         </th>
@@ -30,7 +29,7 @@
         <th>
             @Html.DisplayNameFor(model => model.IdTipoProfissional)
         </th>
-        @*}*@
+        
         <th>
             @Html.DisplayNameFor(model => model.IdUser)
         </th>
@@ -149,9 +148,15 @@
                 @Html.DisplayFor(modelItem => item.Salario)
             </td>
             <td>
+
                 @Html.ActionLink("Editar", "Edit", new { id = item.IdProfissional }, htmlAttributes: new { @role = "button", @class = "btn btn-secondary btn-block active" })
                 @Html.ActionLink("Detalhes", "Details", new { id = item.IdProfissional }, htmlAttributes: new { @role = "button", @class = "btn btn-secondary btn-block active" })
-                @Html.ActionLink("Excluir", "Delete", new { id = item.IdProfissional }, htmlAttributes: new { @role = "button", @class = "btn btn-secondary btn-block active" })
+                @if (User.IsInRole("Gerente"))
+                {
+                    @Html.ActionLink("Excluir", "Delete", new { id = item.IdProfissional }, htmlAttributes: new { @role = "button", @class = "btn btn-secondary btn-block active" })
+                }
+                @*@Html.ActionLink("Editar", "Edit2", new { id = item.IdProfissional }, htmlAttributes: new { @role = "button", @class = "btn btn-secondary btn-block active" })
+        @Html.ActionLink("Detalhes", "Details", new { id = item.IdProfissional }, htmlAttributes: new { @role = "button", @class = "btn btn-secondary btn-block active" })*@
             </td>
         </tr>
     }

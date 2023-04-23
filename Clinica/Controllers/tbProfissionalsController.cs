@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Clinica.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Clinica.Controllers
 {
@@ -16,34 +17,79 @@ namespace Clinica.Controllers
     public class tbProfissionalsController : Controller
     {
         private ModelDB db = new ModelDB();
-        
+
 
         // GET: tbProfissionals
-      [Authorize(Roles = "Gerente,Medico")]
+        [Authorize(Roles = "Gerente,Medico,Nutricionista")]
         public ActionResult Index()
         {
             //var tbProfissional = db.tbProfissional.Include(t => t.tbCidade).Include(t => t.tbContrato).Include(t => t.tbTipoAcesso);
             // IQueryable<tbProfissional> tbProfissional = db.tbProfissional.Include(t => t.tbCidade).Include(t => t.tbContrato).Include(t => t.tbTipoAcesso);
             //return View(tbProfissional.ToList());
             IQueryable<tbProfissional> tbProfissional = null;
+            //IdentityUserRole TipoProfissional = new IdentityUserRole();
+            //int tipoProfissional = 0;
+           
             if (User.IsInRole("Gerente"))
             {
-                tbProfissional = db.tbProfissional.Include(t => t.tbCidade).Include(t => t.tbContrato).Include(t => t.tbTipoAcesso);
+                //if (TipoProfissional.RoleId == "02")
+                //    tipoProfissional = 02;
+                //tipoProfissional = 03;
+                if (User.IsInRole("Medico"))
+                {
+                 
+                    var k = (from c in db.tbProfissional
+                             where ((Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.Nutricional)
+                             && (c.IdTipoProfissional ==  02 )
+                             select c).ToList();
+                    return View("Index", k);
+                }
+                else if (User.IsInRole("Nutricionista"))
+                {
+                    var k = (from c in db.tbProfissional
+                             where ((Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.Nutricional)
+                             && (c.IdTipoProfissional == 03)
+                             select c).ToList();
+                    return View("Index", k);
+                }
+                    tbProfissional = db.tbProfissional.Include(t => t.tbCidade).Include(t => t.tbContrato).Include(t => t.tbTipoAcesso);
                 return View(tbProfissional.ToList());
+                return View("Index", tbProfissional);
             }
             else
             {
+                var idLogado = User.Identity.GetUserId();
                 if (User.IsInRole("Medico"))
                 {
                     //var k = (from c in db.tbProfissional
                     //        where ((Plan)c.tbContrato.IdPlano == Plan.MedicoTotal)
                     //        select c).ToList().Select(x => new tbProfissional() { Bairro = x.Bairro, CEP = x.CEP}).ToList();
+                    //var k = (from c in db.tbProfissional
+                    //         where ((Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.MedicoTotal)
+                    //         select new ParteProfissional() { Bairro = c.Bairro, CEP =c.CEP, CPF = c.CPF, Nome = c.Nome}).ToList();
+                    //return View("Index2",k);
+                   
                     var k = (from c in db.tbProfissional
-                             where ((Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.MedicoTotal)
-                             select new ParteProfissional() { Bairro = c.Bairro, CEP =c.CEP, CPF = c.CPF, Nome = c.Nome}).ToList();
-                    return View("Index2",k);
+                                         where ((Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.MedicoTotal
+                                         && c.IdUser == idLogado)
+                             select c).ToList();
+                    return View("Index", k);
+
                 }
-            }
+                else if (User.IsInRole("Nutricionista"))
+                    {
+                        //var k = (from c in db.tbProfissional
+                        //        where ((Plan)c.tbContrato.IdPlano == Plan.MedicoTotal)
+                        //        select c).ToList().Select(x => new tbProfissional() { Bairro = x.Bairro, CEP = x.CEP}).ToList();
+                        var k = (from c in db.tbProfissional
+                                 where ((Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.Nutricional
+                                 && c.IdUser == idLogado)
+                                 select c).ToList();
+                        return View("Index", k);
+                    }
+                }
+               
+            
             return View(tbProfissional.ToList());
             //LINQ
             //var k = (from c in db.tbProfissional
@@ -92,16 +138,16 @@ namespace Clinica.Controllers
         // obter mais detalhes, veja https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdProfissional,IdTipoProfissional,IdTipoAcesso,IdCidade,IdUser,Nome,CPF,CRM_CRN,Especialidade,Logradouro,Numero,Bairro,CEP,Cidade,Estado,DDD1,DDD2,Telefone1,Telefone2,Salario")] tbProfissional tbProfissional, [Bind(Include ="IdPlano")] tbContrato tbContrato)//[Bind(Include = "IdProfissional,IdTipoProfissional,IdContrato,IdTipoAcesso,IdCidade,IdUser,Nome,CPF,CRM_CRN,Especialidade,Logradouro,Numero,Bairro,CEP,Cidade,Estado,DDD1,DDD2,Telefone1,Telefone2,Salario")] tbProfissional tbProfissional
+        public ActionResult Create([Bind(Include = "IdProfissional,IdTipoProfissional,IdTipoAcesso,IdCidade,IdUser,Nome,CPF,CRM_CRN,Especialidade,Logradouro,Numero,Bairro,CEP,Cidade,Estado,DDD1,DDD2,Telefone1,Telefone2,Salario")] tbProfissional tbProfissional, [Bind(Include = "IdPlano")] tbContrato tbContrato)//[Bind(Include = "IdProfissional,IdTipoProfissional,IdContrato,IdTipoAcesso,IdCidade,IdUser,Nome,CPF,CRM_CRN,Especialidade,Logradouro,Numero,Bairro,CEP,Cidade,Estado,DDD1,DDD2,Telefone1,Telefone2,Salario")] tbProfissional tbProfissional
         {
             try
             {
                 ModelState.Remove("IdUser");
                 if (ModelState.IsValid)
                 {
-                   
+
                     //Contrato//
-                        tbContrato.DataInicio = DateTime.UtcNow;
+                    tbContrato.DataInicio = DateTime.UtcNow;
                     tbContrato.DataFim = tbContrato.DataInicio.Value.AddMonths(1);
                     db.tbContrato.Add(tbContrato);
                     db.SaveChanges();
@@ -114,9 +160,9 @@ namespace Clinica.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            catch(DataException ex)
+            catch (DataException ex)
             {
-                ModelState.AddModelError("",$"Ocorreu um erro.Não foi possivel salvar os dados.Tente mais tarde!{ex}");
+                ModelState.AddModelError("", $"Ocorreu um erro.Não foi possivel salvar os dados.Tente mais tarde!{ex}");
                 ViewBag.Erro = ex.Message;
             }
             catch (Exception ex)
@@ -164,7 +210,7 @@ namespace Clinica.Controllers
             }
             var tbProfissional = db.tbProfissional.Find(id);
             if (TryUpdateModel(tbProfissional, "",
-                new string[] { "IdCidade", "Nome", "Logradouro","Numero","Bairro","CEP","Cidade","Estado","DDD1","DDD2","Telefone1","Telefone2","Salario"}))
+                new string[] { "IdCidade", "Nome", "Logradouro", "Numero", "Bairro", "CEP", "Cidade", "Estado", "DDD1", "DDD2", "Telefone1", "Telefone2", "Salario" }))
             {
                 try
                 {
@@ -173,7 +219,7 @@ namespace Clinica.Controllers
                 }
                 catch (DataException)
                 {
-                    ModelState.AddModelError(""," Aconteceu um erro,por favor tente mais tarde!");
+                    ModelState.AddModelError("", " Aconteceu um erro,por favor tente mais tarde!");
 
                 }
 

@@ -234,7 +234,10 @@ namespace Clinica.Controllers
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // await UserManager.SendEmailAsync(user.Id, "Confirmar sua conta", "Confirme sua conta clicando <a href=\"" + callbackUrl + "\">aqui</a>");
-
+                        if (User.IsInRole("Medico"))
+                        {
+                            return RedirectToAction("Index2", "Home");
+                        }
                         return RedirectToAction("Index", "Home");
                     }
                     AddErrors(result);
@@ -314,7 +317,10 @@ namespace Clinica.Controllers
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // await UserManager.SendEmailAsync(user.Id, "Confirmar sua conta", "Confirme sua conta clicando <a href=\"" + callbackUrl + "\">aqui</a>");
-
+                        if (User.IsInRole("Nutricionista"))
+                        {
+                            return RedirectToAction("Index3", "Home");
+                        }
                         return RedirectToAction("Index", "Home");
                     }
                     AddErrors(result);
