@@ -27,28 +27,24 @@ namespace Clinica.Controllers
             // IQueryable<tbProfissional> tbProfissional = db.tbProfissional.Include(t => t.tbCidade).Include(t => t.tbContrato).Include(t => t.tbTipoAcesso);
             //return View(tbProfissional.ToList());
             IQueryable<tbProfissional> tbProfissional = null;
-            //IdentityUserRole TipoProfissional = new IdentityUserRole();
-            //int tipoProfissional = 0;
+            
            
             if (User.IsInRole("Gerente"))
             {
-                //if (TipoProfissional.RoleId == "02")
-                //    tipoProfissional = 02;
-                //tipoProfissional = 03;
+              
                 if (User.IsInRole("Medico"))
                 {
                  
                     var k = (from c in db.tbProfissional
-                             where ((Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.Nutricional)
-                             && (c.IdTipoProfissional ==  02 )
+                             where ((Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.MedicoTotal || (Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.MedicoParcial
+                             || (Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.Especial)
                              select c).ToList();
                     return View("Index", k);
                 }
                 else if (User.IsInRole("Nutricionista"))
                 {
                     var k = (from c in db.tbProfissional
-                             where ((Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.Nutricional)
-                             && (c.IdTipoProfissional == 03)
+                             where ((Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.Nutricional)                             
                              select c).ToList();
                     return View("Index", k);
                 }
