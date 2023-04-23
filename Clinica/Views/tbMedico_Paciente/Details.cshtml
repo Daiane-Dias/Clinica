@@ -1,0 +1,42 @@
+﻿@model Clinica.Models.tbMedico_Paciente
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbMedico_Paciente</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tbPaciente.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbPaciente.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbProfissional.IdUser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbProfissional.IdUser)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InformacaoResumida)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InformacaoResumida)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdMedico_Paciente }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

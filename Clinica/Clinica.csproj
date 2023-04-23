@@ -173,6 +173,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\tbAlimentosController.cs" />
+    <Compile Include="Controllers\tbMedico_PacienteController.cs" />
     <Compile Include="Controllers\tbProfissionalsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -297,6 +298,11 @@
     <Content Include="Views\Account\RegisterM.cshtml" />
     <Content Include="Views\tbProfissionals\Index2.cshtml" />
     <Content Include="Views\Account\RegisterN.cshtml" />
+    <Content Include="Views\tbMedico_Paciente\Create.cshtml" />
+    <Content Include="Views\tbMedico_Paciente\Delete.cshtml" />
+    <Content Include="Views\tbMedico_Paciente\Details.cshtml" />
+    <Content Include="Views\tbMedico_Paciente\Edit.cshtml" />
+    <Content Include="Views\tbMedico_Paciente\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
