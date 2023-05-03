@@ -20,25 +20,27 @@ namespace Clinica.Controllers
         public ActionResult Index()
         {
             IQueryable<tbMedico_Paciente> tbMedicoPaciente = null;
+            
             var idLogado = User.Identity.GetUserId();
-
+          
             var id = (from c in db.tbProfissional
                       where (c.IdUser == idLogado)
-                      select c.IdProfissional);
-            //erro ao converter tipo
-            int idProfissional = Convert.ToInt32(id);
+                      select c.IdProfissional).ToList().FirstOrDefault();
+            
+            var idProfissional=id;
+
             if (User.IsInRole("Medico"))
             {
 
                 var k = (from c in db.tbMedico_Paciente
-                         where (c.IdProfissional == idProfissional)
+                         where (c.IdProfissional ==idProfissional)
                          select c).ToList();
                 return View("Index", k);
             }
             else if (User.IsInRole("Nutricionista"))
             {
                 var k = (from c in db.tbMedico_Paciente
-                         where  (c.IdProfissional == idProfissional)
+                         where  (c.IdProfissional==idProfissional)
                          select c).ToList();
                 return View("Index", k);
             }
@@ -77,6 +79,7 @@ namespace Clinica.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IdMedico_Paciente,IdPaciente,IdProfissional,InformacaoResumida")] tbMedico_Paciente tbMedico_Paciente)
         {
+            
             if (ModelState.IsValid)
             {
                 db.tbMedico_Paciente.Add(tbMedico_Paciente);
