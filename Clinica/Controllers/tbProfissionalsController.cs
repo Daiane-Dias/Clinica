@@ -66,8 +66,8 @@ namespace Clinica.Controllers
                     //return View("Index2",k);
                    
                     var k = (from c in db.tbProfissional
-                                         where ((Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.MedicoTotal
-                                         && c.IdUser == idLogado)
+                                         where (c.IdUser == idLogado && (Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.MedicoTotal
+                                          )
                              select c).ToList();
                     return View("Index", k);
 
@@ -78,8 +78,8 @@ namespace Clinica.Controllers
                         //        where ((Plan)c.tbContrato.IdPlano == Plan.MedicoTotal)
                         //        select c).ToList().Select(x => new tbProfissional() { Bairro = x.Bairro, CEP = x.CEP}).ToList();
                         var k = (from c in db.tbProfissional
-                                 where ((Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.Nutricional
-                                 && c.IdUser == idLogado)
+                                 where (c.IdUser == idLogado && (Models.Enum.Plan)c.tbContrato.IdPlano == Models.Enum.Plan.Nutricional
+                                  )
                                  select c).ToList();
                         return View("Index", k);
                     }
